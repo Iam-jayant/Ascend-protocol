@@ -9,7 +9,7 @@ import "./AscendVault.sol";
  * @dev Gas-efficient vault deployment with user tracking
  */
 contract AscendFactory {
-    // state variables
+    // ============ State Variables ============
 
     address[] public allVaults;
     mapping(address => address[]) public userVaults; // user => vaults[]
@@ -18,7 +18,7 @@ contract AscendFactory {
     uint256 public constant DEFAULT_CHECK_IN_PERIOD = 30 days;
     uint256 public constant DEFAULT_GRACE_PERIOD = 7 days;
 
-    // events
+    // ============ Events ============
 
     event VaultCreated(
         address indexed owner,
@@ -28,12 +28,12 @@ contract AscendFactory {
         uint256 vaultIndex
     );
 
-    // errors
+    // ============ Errors ============
 
     error InvalidCheckInPeriod();
     error InvalidOwner();
 
-    // functions
+    // ============ Functions ============
 
     /**
      * @notice Create a new vault with default parameters
@@ -80,7 +80,7 @@ contract AscendFactory {
         return vaultAddress;
     }
 
-    // view functions
+    // ============ View Functions ============
 
     /**
      * @notice Get all vaults created by a user
