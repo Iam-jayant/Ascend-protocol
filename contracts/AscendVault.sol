@@ -14,6 +14,8 @@ import "./interfaces/IAscendVault.sol";
 contract AscendVault is IAscendVault, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
+    // ============ State Variables ============
+
     address public immutable owner;
     uint256 public lastCheckIn;
     uint256 public immutable checkInPeriod;
@@ -23,7 +25,7 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
     Beneficiary[] private beneficiaries;
     mapping(address => uint256) private beneficiaryIndex; // 1-based indexing (0 = not exists)
 
-    //errors
+    // ============ Errors ============
 
     error OnlyOwner();
     error OnlyBeforeTriggered();
@@ -37,7 +39,7 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
     error NoBeneficiaries();
     error NoFundsToDistribute();
 
-    //modifiers
+    // ============ Modifiers ============
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert OnlyOwner();
@@ -54,7 +56,7 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
         _;
     }
 
-    //constructor
+    // ============ Constructor ============
 
     constructor(
         address _owner,
@@ -71,10 +73,11 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
         isTriggered = false;
     }
 
-    //Core Functions
+    // ============ Core Functions ============
 
     /**
-     * @notice Owner resets the deadman switch timer */
+     * @notice Owner resets the deadman switch timer
+     */
     function checkIn() external onlyOwner onlyBeforeTriggered {
         lastCheckIn = block.timestamp;
         emit CheckedIn(owner, lastCheckIn + checkInPeriod + gracePeriod);
@@ -84,12 +87,10 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
      * @notice Add a new beneficiary to the vault
      * @param _beneficiary Wallet address of beneficiary
      * @param _sharePercentage Percentage share (100.00% = 10000)
-     * @param _upiId Encrypted UPI ID for fiat payout
      */
     function addBeneficiary(
         address payable _beneficiary,
-        uint256 _sharePercentage,
-        string calldata _upiId
+        uint256 _sharePercentage
     ) external onlyOwner onlyBeforeTriggered {
         if (_beneficiary == address(0)) revert InvalidAddress();
         if (_sharePercentage == 0 || _sharePercentage > 10000) revert InvalidSharePercentage();
@@ -103,14 +104,13 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
             Beneficiary({
                 beneficiaryAddress: _beneficiary,
                 sharePercentage: _sharePercentage,
-                upiId: _upiId,
                 isActive: true
             })
         );
 
         beneficiaryIndex[_beneficiary] = beneficiaries.length; // 1-based index
 
-        emit BeneficiaryAdded(_beneficiary, _sharePercentage, _upiId);
+        emit BeneficiaryAdded(_beneficiary, _sharePercentage);
     }
 
     /**
@@ -217,7 +217,7 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
         }
     }
 
-    //View Functions
+    // ============ View Functions ============
 
     /**
      * @notice Check if vault can be triggered
@@ -266,7 +266,8 @@ contract AscendVault is IAscendVault, ReentrancyGuard {
         return total;
     }
 
-    // Receive Function
+    // ============ Receive Function ============
+
     /**
      * @notice Allow vault to receive MATIC
      */

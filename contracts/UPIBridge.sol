@@ -7,7 +7,7 @@ pragma solidity ^0.8.20;
  * @dev Records payouts for tax reporting under Section 194S
  */
 contract UPIBridge {
-    //State Variables
+    // ============ State Variables ============
 
     address public admin;
     address public backend; // Authorized backend service
@@ -42,7 +42,7 @@ contract UPIBridge {
     // Counter for generating unique payout IDs
     uint256 private payoutCounter;
 
-    //Events
+    // ============ Events ============
 
     event PayoutRecorded(
         bytes32 indexed payoutId,
@@ -62,7 +62,7 @@ contract UPIBridge {
 
     event BackendUpdated(address indexed oldBackend, address indexed newBackend);
 
-    // errors
+    // ============ Errors ============
 
     error OnlyAdmin();
     error OnlyBackend();
@@ -70,7 +70,7 @@ contract UPIBridge {
     error PayoutNotFound();
     error InvalidAmount();
 
-    // modifiers
+    // ============ Modifiers ============
 
     modifier onlyAdmin() {
         if (msg.sender != admin) revert OnlyAdmin();
@@ -82,14 +82,14 @@ contract UPIBridge {
         _;
     }
 
-    // constructor
+    // ============ Constructor ============
 
     constructor() {
         admin = msg.sender;
         backend = msg.sender; // Initially admin is backend
     }
 
-    // core functions
+    // ============ Core Functions ============
 
     /**
      * @notice Record a new payout for compliance tracking
@@ -174,7 +174,7 @@ contract UPIBridge {
         emit PayoutStatusUpdated(_payoutId, oldStatus, _newStatus, _razorpayPaymentId);
     }
 
-    // admin functions
+    // ============ Admin Functions ============
 
     /**
      * @notice Set authorized backend service address
@@ -198,7 +198,7 @@ contract UPIBridge {
         admin = _newAdmin;
     }
 
-    // view functions
+    // ============ View Functions ============
 
     /**
      * @notice Get payout details
@@ -262,3 +262,4 @@ contract UPIBridge {
         return 0; // Placeholder
     }
 }
+

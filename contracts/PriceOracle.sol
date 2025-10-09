@@ -9,7 +9,7 @@ import "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.so
  * @dev Used by LiquidationEngine to prevent price manipulation
  */
 contract PriceOracle {
-    // state variables
+    // ============ State Variables ============
 
     address public admin;
     
@@ -22,13 +22,13 @@ contract PriceOracle {
     // Maximum deviation allowed between successive prices (20%)
     uint256 public constant MAX_PRICE_DEVIATION = 2000; // 20% in basis points
 
-    // events
+    // ============ Events ============
 
     event PriceFeedSet(address indexed token, address indexed priceFeed);
     event PriceFeedRemoved(address indexed token);
     event AdminTransferred(address indexed oldAdmin, address indexed newAdmin);
 
-    // errors
+    // ============ Errors ============
 
     error OnlyAdmin();
     error InvalidAddress();
@@ -36,20 +36,20 @@ contract PriceOracle {
     error StalePrice();
     error InvalidPrice();
 
-    // modifiers
+    // ============ Modifiers ============
 
     modifier onlyAdmin() {
         if (msg.sender != admin) revert OnlyAdmin();
         _;
     }
 
-    // constructor
+    // ============ Constructor ============
 
     constructor() {
         admin = msg.sender;
     }
 
-    // admin functions
+    // ============ Admin Functions ============
 
     /**
      * @notice Set Chainlink price feed for a token
@@ -86,7 +86,7 @@ contract PriceOracle {
         emit AdminTransferred(oldAdmin, _newAdmin);
     }
 
-    // view functions
+    // ============ View Functions ============
 
     /**
      * @notice Get latest price for a token in USD (8 decimals)
