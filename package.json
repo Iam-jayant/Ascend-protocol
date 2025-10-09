@@ -1,0 +1,41 @@
+{
+  "name": "ascend-protocol",
+  "version": "1.0.0",
+  "description": "India's First Crypto Inheritance Protocol - Automated deadman switch with UPI payouts",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "deploy:mumbai": "hardhat run scripts/deploy.js --network mumbai",
+    "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
+    "coverage": "hardhat coverage"
+  },
+  "keywords": [
+    "crypto",
+    "inheritance",
+    "deadman-switch",
+    "india",
+    "upi",
+    "polygon"
+  ],
+  
+  "author": "Team SHUNYA",
+  "license": "MIT",
+  "dependencies": {
+    "@chainlink/contracts": "^1.4.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@razorpay/razorpay": "^2.9.2",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.10.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "chai": "^4.3.10",
+    "hardhat": "^2.19.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5"
+  }
+}
