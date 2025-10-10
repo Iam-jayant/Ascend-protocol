@@ -1,0 +1,48 @@
+{
+  "name": "ascend-protocol-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Ascend Protocol - India's First Crypto Inheritance Protocol",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "worker": "node src/workers/eventListener.js",
+    "migrate": "node src/migrations/migrate.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "crypto",
+    "inheritance",
+    "blockchain",
+    "ethereum",
+    "sepolia",
+    "api"
+  ],
+  "author": "Team SHUNYA",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.75.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.6.1",
+    "ethers": "^6.10.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.7",
+    "pg": "^8.11.3",
+    "razorpay": "^2.9.2",
+    "twilio": "^4.19.0",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3"
+  }
+}

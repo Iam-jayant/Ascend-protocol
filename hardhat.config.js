@@ -42,8 +42,8 @@ export default {
   },
   etherscan: {
     apiKey: {
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
-      polygon: process.env.POLYGONSCAN_API_KEY || ""
+      sepolia: "US6DJZCPJC88FYI3YKMFE4QCW2JF9J3PPQ",
+      mainnet: "US6DJZCPJC88FYI3YKMFE4QCW2JF9J3PPQ"
     }
   },
   gasReporter: {

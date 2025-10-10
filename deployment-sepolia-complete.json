@@ -1,0 +1,12 @@
+{
+  "network": "sepolia",
+  "deployer": "0x65c3768E98eE211a7589fe94c753e11cB8895069",
+  "timestamp": "2025-10-09T22:58:42.742Z",
+  "contracts": {
+    "PriceOracle": "0x1cad2202F3c916209D7cF54c9E0Fef67e75b3997",
+    "LiquidationEngine": "0xc34E4E65023613f7b841E08b10eBDCC33EAcE541",
+    "UPIBridge": "0x988708C9aBaE80Ece464ad573DBc0b78F1981A4e",
+    "AscendFactory": "0xa3C193E814D17fB7536450DebcEC3bF8FA65C5cF",
+    "MockERC20": "0x98cFe7e486e5BcBB975FEA381E7096b11A3d21C6"
+  }
+}
