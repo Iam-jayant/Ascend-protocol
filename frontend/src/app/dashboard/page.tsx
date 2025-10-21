@@ -1,8 +1,10 @@
+// frontend/src/app/dashboard/page.tsx
+
 "use client";
 
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit'; // <-- REMOVED
 import Link from 'next/link';
 import { useVaults } from '@/hooks/useVaults';
 
@@ -45,21 +47,6 @@ export default function Dashboard() {
     }
   };
 
-  if (!isConnected) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Connect Your Wallet
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Please connect your wallet to access the dashboard
-          </p>
-          <ConnectButton />
-        </div>
-      </div>
-    );
-  }
 
   if (vaultsLoading) {
     return (
@@ -88,13 +75,20 @@ export default function Dashboard() {
                 </span>
               </Link>
             </div>
-            <ConnectButton />
+            {/* Wallet status display (replaces ConnectButton) */}
+            <div className="text-sm">
+                {isConnected && address ? (
+                    <span className="text-green-600 font-medium">{address.slice(0, 6)}...{address.slice(-4)}</span>
+                ) : (
+                    <span className="text-red-600 font-medium">Wallet Required</span>
+                )}
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:-px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Dashboard
@@ -103,67 +97,81 @@ export default function Dashboard() {
             Manage your crypto inheritance vaults
           </p>
         </div>
-
-        {/* Create Vault Button */}
-        <div className="mb-8">
-          <Link 
-            href="/vault/create" 
-            className="btn-primary inline-block"
-          >
-            Create New Vault
-          </Link>
-        </div>
-
-        {/* Vaults List */}
-        <div className="space-y-4">
-          {vaults.length === 0 ? (
-            <div className="card text-center py-12">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                No Vaults Found
+        
+        {/* Conditional content based on connection status */}
+        {!isConnected ? (
+             <div className="card text-center py-12 bg-red-50 border-red-200">
+              <h3 className="text-lg font-semibold text-red-700 mb-2">
+                Wallet Connection Required
               </h3>
-              <p className="text-gray-600 mb-4">
-                Create your first crypto inheritance vault to get started.
+              <p className="text-red-600">
+                Please ensure your wallet is connected and signed in to view and manage your vaults.
               </p>
-              <Link href="/vault/create" className="btn-primary">
-                Create Vault
-              </Link>
             </div>
-          ) : (
-            vaults.map((vault: any) => {
-              const status = getVaultStatus(vault);
-              return (
-                <div key={vault.id} className="card">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          Vault #{vault.id.slice(0, 8)}
-                        </h3>
-                        <span className={status.color}>
-                          {status.text}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-600 space-y-1">
-                        <p>Address: {vault.vaultAddress}</p>
-                        <p>Check-in Period: {vault.checkInPeriod} days</p>
-                        <p>Grace Period: {vault.gracePeriod} days</p>
-                        <p>Last Check-in: {new Date(vault.lastCheckIn).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Link 
-                        href={`/vault/${vault.id}`}
-                        className="btn-secondary text-sm"
-                      >
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
+        ) : (
+            <>
+                {/* Create Vault Button */}
+                <div className="mb-8">
+                <Link 
+                    href="/vault/create" 
+                    className="btn-primary inline-block"
+                >
+                    Create New Vault
+                </Link>
                 </div>
-              );
-            })
-          )}
-        </div>
+
+                {/* Vaults List */}
+                <div className="space-y-4">
+                {vaults.length === 0 ? (
+                    <div className="card text-center py-12">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        No Vaults Found
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                        Create your first crypto inheritance vault to get started.
+                    </p>
+                    <Link href="/vault/create" className="btn-primary">
+                        Create Vault
+                    </Link>
+                    </div>
+                ) : (
+                    vaults.map((vault: any) => {
+                    const status = getVaultStatus(vault);
+                    return (
+                        <div key={vault.id} className="card">
+                        <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                            <div className="flex items-center space-x-3 mb-2">
+                                <h3 className="text-lg font-semibold text-gray-900">
+                                Vault #{vault.id.slice(0, 8)}
+                                </h3>
+                                <span className={status.color}>
+                                {status.text}
+                                </span>
+                            </div>
+                            <div className="text-sm text-gray-600 space-y-1">
+                                <p>Address: {vault.vaultAddress}</p>
+                                <p>Check-in Period: {vault.checkInPeriod} days</p>
+                                <p>Grace Period: {vault.gracePeriod} days</p>
+                                <p>Last Check-in: {new Date(vault.lastCheckIn).toLocaleDateString()}</p>
+                            </div>
+                            </div>
+                            <div className="flex space-x-2">
+                            <Link 
+                                href={`/vault/${vault.id}`}
+                                className="btn-secondary text-sm"
+                            >
+                                View Details
+                            </Link>
+                            </div>
+                        </div>
+                        </div>
+                    );
+                    })
+                )}
+                </div>
+            </>
+        )}
       </main>
     </div>
   );

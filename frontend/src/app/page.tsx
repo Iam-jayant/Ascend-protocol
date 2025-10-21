@@ -18,7 +18,6 @@ export default function Home() {
                 Ascend Protocol
               </span>
             </div>
-            <ConnectButton />
           </div>
         </div>
       </header>

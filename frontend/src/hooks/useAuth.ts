@@ -85,6 +85,16 @@ export function useAuth() {
     }
   };
 
+  // Convenience wrapper for explicit sign-in flow (can be called from UI)
+  const signInWithWallet = async () => {
+    try {
+      return await authenticate();
+    } catch (err) {
+      // Rethrow to allow UI to handle
+      throw err;
+    }
+  };
+
   // Logout
   const logout = async () => {
     try {
@@ -136,6 +146,17 @@ export function useAuth() {
     // Only check auth when wallet connection status changes
     if (isConnected !== undefined) {
       checkAuth();
+      // If the wallet just connected, proactively attempt to sign in
+      if (isConnected && address) {
+        // Do not auto-run signature if already authenticated
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          // Fire-and-forget authentication attempt; UI may also call signInWithWallet explicitly
+          authenticate().catch((err) => {
+            console.log('Auto sign-in failed or was cancelled:', err?.message || err);
+          });
+        }
+      }
     }
   }, [isConnected, address]); // Added address dependency
 
@@ -154,6 +175,7 @@ export function useAuth() {
     loading,
     error,
     authenticate,
+    signInWithWallet,
     logout,
   };
 }

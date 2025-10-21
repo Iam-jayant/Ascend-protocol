@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import ConnectMetaMaskButton from '@/components/ConnectMetaMaskButton';
 import { useAccount, useChainId, useBalance } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ArrowLeftIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
@@ -153,7 +154,10 @@ export default function CreateVault() {
                 <span>Back to Dashboard</span>
               </Link>
             </div>
-            <ConnectButton />
+            <div className="flex items-center">
+              <ConnectButton />
+              <ConnectMetaMaskButton />
+            </div>
           </div>
         </div>
       </header>

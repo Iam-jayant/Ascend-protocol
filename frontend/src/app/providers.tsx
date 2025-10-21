@@ -1,10 +1,12 @@
+// frontend/src/app/providers.tsx
+
 "use client";
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { sepolia } from 'wagmi/chains';
-import { metaMask } from 'wagmi/connectors';
+// import { metaMask } from 'wagmi/connectors'; // <-- REMOVED
 import { useState } from 'react';
 
 import '@rainbow-me/rainbowkit/styles.css';
@@ -16,15 +18,12 @@ const config = getDefaultConfig({
   appName: 'Ascend Protocol',
   projectId: projectId,
   chains: [sepolia],
-  connectors: [
-    metaMask({
-      shimDisconnect: true,
-      shimChainChangedDisconnect: true,
-    }),
-  ],
+  // REMOVED the explicit 'connectors' array. 
+  // getDefaultConfig now automatically includes WalletConnect, Injected, MetaMask, etc.
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
+// ... (rest of the code is unchanged)
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
