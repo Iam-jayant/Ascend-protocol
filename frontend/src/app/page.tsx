@@ -1,6 +1,8 @@
+// frontend/src/app/page.tsx
+
 "use client";
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from '@rainbow-me/rainbowkit'; // <-- RE-ADDED
 import Link from 'next/link';
 
 export default function Home() {
@@ -18,6 +20,8 @@ export default function Home() {
                 Ascend Protocol
               </span>
             </div>
+            {/* Wallet connection button is restored here */}
+            <ConnectButton /> 
           </div>
         </div>
       </header>
