@@ -1,3 +1,5 @@
+// backend/src/server.js
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -10,6 +12,9 @@ import path from 'path';
 import authRoutes from './routes/auth.js';
 import vaultRoutes from './routes/vaults-demo.js'; // Use demo route
 import claimRoutes from './routes/claims.js';
+
+// Import service for scheduled tasks (NEW IMPORT)
+import { startVaultMonitoring } from './services/vaultMonitoringService.js';
 
 // Import configuration
 import { config, validateConfig } from './config/services.js';
@@ -208,6 +213,9 @@ const startServer = async () => {
       console.log(`🔗 Health check: http://localhost:${config.server.port}/health`);
       console.log(`📊 API status: http://localhost:${config.server.port}/api/status`);
       console.log('🚀 ===========================================\n');
+      
+      // START VAULT MONITORING SERVICE (ADDED)
+      startVaultMonitoring();
     });
     
     return server;
@@ -222,4 +230,3 @@ const startServer = async () => {
 const server = await startServer();
 
 export default app;
-
