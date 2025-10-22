@@ -1,3 +1,5 @@
+// backend/src/config/blockchain.js
+
 import { ethers } from 'ethers';
 import dotenv from 'dotenv';
 
@@ -11,7 +13,9 @@ const SEPOLIA_CONFIG = {
     ascendFactory: process.env.ASCEND_FACTORY_ADDRESS || "0xa3C193E814D17fB7536450DebcEC3bF8FA65C5cF",
     priceOracle: process.env.PRICE_ORACLE_ADDRESS || "0x1cad2202F3c916209D7cF54c9E0Fef67e75b3997",
     liquidationEngine: process.env.LIQUIDATION_ENGINE_ADDRESS || "0xc34E4E65023613f7b841E08b10eBDCC33EAcE541",
-    upiBridge: process.env.UPI_BRIDGE_ADDRESS || "0x988708C9aBaE80Ece464ad573DBc0b78F1981A4e"
+    upiBridge: process.env.UPI_BRIDGE_ADDRESS || "0x988708C9aBaE80Ece464ad573DBc0b78F1981A4e",
+    // NOTE: This is a placeholder for Sepolia Mock USDC. Update your .env accordingly.
+    usdc: process.env.USDC_ADDRESS || "0x1c7D4B196Cb0C7B01d743Fbc6116a902fB594fD3" 
   }
 };
 
@@ -70,6 +74,13 @@ const CONTRACT_ABIS = {
     "function getVaultPayouts(address _vaultAddress) external view returns (bytes32[])",
     "function getBeneficiaryPayouts(address _beneficiary) external view returns (bytes32[])",
     "event PayoutRecorded(bytes32 indexed payoutId, address indexed vaultAddress, address indexed beneficiary, uint256 usdcAmount, uint256 inrAmount, string upiId)"
+  ],
+  // Simple ABI for checking basic ERC20 info, useful for the Claim portal
+  ERC20: [
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function decimals() view returns (uint8)",
+    "function balanceOf(address account) view returns (uint256)"
   ]
 };
 
@@ -81,6 +92,7 @@ try {
   provider = new ethers.JsonRpcProvider(SEPOLIA_CONFIG.rpcUrl);
   
   if (process.env.PRIVATE_KEY && process.env.PRIVATE_KEY !== '0xyour_private_key_here') {
+    // The signer is the hot wallet used for monitoring/triggering/distributing
     signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
     console.log('✅ Blockchain provider and signer initialized for Sepolia');
   } else {
@@ -120,6 +132,13 @@ if (provider) {
       signer || provider
     );
     
+    // USDC Contract instance for easy checks (optional but useful)
+    contracts.usdc = new ethers.Contract(
+      SEPOLIA_CONFIG.contracts.usdc,
+      CONTRACT_ABIS.ERC20,
+      signer || provider
+    );
+
     console.log('✅ Contract instances initialized');
   } catch (error) {
     console.error('❌ Failed to initialize contract instances:', error.message);
@@ -147,4 +166,3 @@ export {
   getProvider,
   getSigner
 };
-
