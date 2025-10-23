@@ -88,6 +88,14 @@ export async function transaction(callback) {
   }
 }
 
+// export async function getclient() {
+//   return {
+//     query: async (text, params) => {
+//       return await query(text, params);
+//     }
+//   };
+// }
+
 // Close function (no-op for Supabase client)
 export async function closePool() {
   console.log('🔌 Supabase client connection closed');
