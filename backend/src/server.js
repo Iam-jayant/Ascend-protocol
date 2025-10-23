@@ -230,3 +230,5 @@ const startServer = async () => {
 const server = await startServer();
 
 export default app;
+
+// export { server };
