@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Web3 Dark Theme - Ascend Protocol */
+    --background: 220 30% 5%;
+    --foreground: 210 100% 98%;
+
+    --card: 220 25% 8%;
+    --card-foreground: 210 100% 98%;
+
+    --popover: 220 30% 6%;
+    --popover-foreground: 210 100% 98%;
+
+    /* Purple Primary - Lovable inspired */
+    --primary: 270 80% 60%;
+    --primary-foreground: 210 100% 98%;
+
+    /* Deep Purple Secondary */
+    --secondary: 280 70% 50%;
+    --secondary-foreground: 210 100% 98%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 210 20% 60%;
+
+    --accent: 260 80% 55%;
+    --accent-foreground: 210 100% 98%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 100% 98%;
+
+    --border: 220 20% 18%;
+    --input: 220 20% 15%;
+    --ring: 190 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom Web3 Tokens */
+    --neon-purple: 270 80% 60%;
+    --deep-purple: 280 70% 50%;
+    --deep-space: 220 30% 5%;
+    --card-glow: 220 25% 12%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(270 80% 60%), hsl(280 70% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(260 80% 55%), hsl(270 80% 60%));
+    --gradient-dark: linear-gradient(180deg, hsl(220 30% 5%), hsl(220 25% 8%));
+    
+    /* Shadows & Glows */
+    --glow-purple: 0 0 60px hsl(270 80% 60% / 0.5);
+    --glow-accent: 0 0 50px hsl(280 70% 50% / 0.4);
+    --shadow-elevation: 0 20px 60px hsl(220 30% 5% / 0.6);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-purple {
+    box-shadow: var(--glow-purple);
+  }
+
+  .glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+
+  .border-glow {
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 0 20px hsl(270 80% 60% / 0.15);
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-navbar {
+    background: rgba(20, 20, 40, 0.4);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(147, 51, 234, 0.2);
+    box-shadow: 0 8px 32px rgba(147, 51, 234, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-button {
+    background: rgba(147, 51, 234, 0.15);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    box-shadow: 0 4px 16px rgba(147, 51, 234, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-button:hover {
+    background: rgba(147, 51, 234, 0.25);
+    border-color: rgba(147, 51, 234, 0.5);
+    box-shadow: 0 8px 24px rgba(147, 51, 234, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
