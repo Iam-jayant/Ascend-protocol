@@ -37,6 +37,7 @@
     "@nomicfoundation/hardhat-verify": "^2.0.0",
     "chai": "^4.3.10",
     "hardhat": "^2.19.0",
+    "next": "15.5.4",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.5"
   }
